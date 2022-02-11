@@ -9,12 +9,14 @@ nohup ./ngrok tcp 3389 &>/dev/null &
 echo "############################################################################################"
 sudo apt-get update > /dev/null 2>&1
 echo "#..%%%%...%%..%%..%%..%%...%%%%.....%%..%%..%%..%%..%%..%%..%%..%%..%%..%%..%%%%%....%%%%..#"
-sudo sudo apt install qemu > /dev/null 2>&1
+sudo apt install qemu -y > /dev/null 2>&1
+sudo apt install qemu-system -y > /dev/null 2>&1
 sudo apt install -y qemu-kvm > /dev/null 2>&1
 sudo qemu-img create -f qcow2 andro.img 50G  > /dev/null 2>&1
 sudo qemu-system-x86_64 andro.img -m 8G -boot d -cdrom "android-x86_64-8.1-rc1.iso"  > /dev/null 2>&1
 echo "#.%%..%%..%%%.%%..%%%.%%..%%..%%.....%%%%...%%..%%..%%.%%...%%..%%..%%..%%..%%..%%..%%..%%.#"
 sudo qemu-system-x86_64 andro.img -m 2G  > /dev/null 2>&1
+qemu-system-x86_64 -enable-kvm -cpu host -hda andro -boot d -net nic -smp cores=2 -net user,hostfwd=tcp::30889-:3389 $custom_param_ram -nographic &>/dev/null &
 echo "#.%%..%%..%%.%%%..%%.%%%..%%..%%......%%....%%..%%..%%%%....%%..%%%%%%..%%..%%%%%...%%..%%.#"
 sudo apt install -y xrdp > /dev/null 2>&1
 echo "#.%%..%%..%%..%%..%%..%%..%%..%%......%%....%%..%%..%%.%%...%%..%%..%%..%%..%%..%%..%%..%%.#"
